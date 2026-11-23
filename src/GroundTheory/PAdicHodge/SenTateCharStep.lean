@@ -105,6 +105,9 @@ include hτp hgen in
 theorem stepEmb_surjective (φ : IntermediateField.extendScalars hMM' →ₐ[M] PadicAlgCl p) :
     ∃ j < p, stepEmb hMM' hτM j = φ := by
   set φ' := φ.liftNormal (PadicAlgCl p)
+  have : Module.IsTorsionFree M (PadicAlgCl p) :=
+    (Module.isTorsionFree_iff_algebraMap_injective (R := ↥M) (A := PadicAlgCl p)).2
+      (algebraMap (↥M) (PadicAlgCl p)).injective
   have hbij : Function.Bijective φ' := Algebra.IsAlgebraic.algHom_bijective φ'
   let σ : Gal(PadicAlgCl p/K) := (AlgEquiv.ofBijective φ' hbij).restrictScalars K
   have hσ : σ ∈ M.fixingSubgroup := by
